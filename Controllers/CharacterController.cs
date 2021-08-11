@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using dotNETCoreWebAPI.Models;
 using System.Linq;
 using dotNETCoreWebAPI.Services;
+using System.Threading.Tasks;
+using dotNETCoreWebAPI.Dtos.Character;
 
 
 
@@ -20,22 +22,22 @@ namespace dotNETCoreWebAPI.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult Get()
+        public async  Task<IActionResult> Get()
     {
-        return Ok(_characterService.GetAllCharacters());
+        return Ok( await _characterService.GetAllCharacters());
 
     }
 
     [HttpGet("{id}")]
 
-    public IActionResult GetSingle( int id)
+    public async Task<IActionResult> GetSingle( int id)
     {
-        return Ok(_characterService.GetCharacterById(id));
+        return Ok(await _characterService.GetCharacterById(id));
     }
     [HttpPost]
-    public IActionResult AddCharacter(Character newCharacter)
+    public async Task<IActionResult> AddCharacter(AddCharacterDto newCharacter)
     {
-        return Ok(_characterService.AddNewCharacter(newCharacter));
+        return Ok(await _characterService.AddNewCharacter(newCharacter));
         
     }
     }

@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using dotNETCoreWebAPI.Models;
+using System.Threading.Tasks;
+using dotNETCoreWebAPI.Dtos.Character;
 
 
 namespace dotNETCoreWebAPI.Services
 {
     public interface ICharacterService
     {
-         List<Character> GetAllCharacters();
-         Character GetCharacterById(int id);
-         List<Character>AddNewCharacter(Character newChar);
+      Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
+      Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id);
+      Task<ServiceResponse<List<GetCharacterDto>>>AddNewCharacter(AddCharacterDto newChar);
     }
 }

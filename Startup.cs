@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using dotNETCoreWebAPI.Services;
+using AutoMapper;
 
 
 namespace dotNETCoreWebAPI
@@ -28,6 +29,7 @@ namespace dotNETCoreWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ICharacterService, CharacterService>();
         }
 

@@ -18,3 +18,6 @@ C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\obj\Debug\netcoreapp5.0\staticw
 C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\obj\Debug\netcoreapp5.0\dotNETCoreWebAPI.dll
 C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\obj\Debug\netcoreapp5.0\dotNETCoreWebAPI.pdb
 C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\obj\Debug\netcoreapp5.0\dotNETCoreWebAPI.genruntimeconfig.cache
+C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\bin\Debug\netcoreapp5.0\AutoMapper.dll
+C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\bin\Debug\netcoreapp5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\student\Desktop\WEBAPI\dotNETCoreWebAPI\obj\Debug\netcoreapp5.0\dotNETCoreWebAPI.csproj.CopyComplete
