@@ -40,6 +40,29 @@ namespace dotNETCoreWebAPI.Controllers
         return Ok(await _characterService.AddNewCharacter(newCharacter));
         
     }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+    {
+        ServiceResponse<GetCharacterDto> response = await _characterService.UpdateCharacter(updatedCharacter);
+        if(response.Data == null)
+        {
+            return NotFound(response);
+        }
+        return Ok(response);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCharacter(int id)
+    {
+        ServiceResponse<List<GetCharacterDto>> response = await _characterService.DeleteCharacter(id);
+
+        if(response.Data == null)
+        {
+            return NotFound(response);
+        }
+        return Ok(response);
+    }
     }
     
 }
