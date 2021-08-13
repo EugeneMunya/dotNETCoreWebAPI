@@ -17,6 +17,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+
 namespace dotNETCoreWebAPI
 {
     public class Startup
@@ -43,6 +45,7 @@ namespace dotNETCoreWebAPI
                 };
 
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository,AuthRepository>();

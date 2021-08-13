@@ -25,7 +25,7 @@ namespace dotNETCoreWebAPI.Controllers
         public async  Task<IActionResult> Get()
     {
         int userId = int.Parse(User.Claims.FirstOrDefault(clm => clm.Type == ClaimTypes.NameIdentifier).Value);
-        return Ok( await _characterService.GetAllCharacters(userId));
+        return Ok( await _characterService.GetAllCharacters());
 
     }
 
