@@ -9,6 +9,7 @@ namespace dotNETCoreWebAPI.Data
 
         public DbSet<Character> characters{get;set;}
         public DbSet<User> Users{get;set;}
+        public DbSet<Weapon> Weapons{get;set;}
         
     }
 }

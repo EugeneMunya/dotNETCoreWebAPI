@@ -50,6 +50,7 @@ namespace dotNETCoreWebAPI
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<IWeaponService, WeaponService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

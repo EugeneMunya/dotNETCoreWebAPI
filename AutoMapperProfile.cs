@@ -1,6 +1,7 @@
 using AutoMapper;
 using dotNETCoreWebAPI.Models;
 using dotNETCoreWebAPI.Dtos.Character;
+using dotNETCoreWebAPI.Dtos.Weapon;
 
 namespace dotNETCoreWebAPI
 {
@@ -10,6 +11,7 @@ namespace dotNETCoreWebAPI
         {
             CreateMap<Character, GetCharacterDto>();
             CreateMap<AddCharacterDto, Character>();
+            CreateMap<Weapon, GetWeaponDto>();
         }
     }
 }
