@@ -5,12 +5,12 @@ using System.Linq;
 using dotNETCoreWebAPI.Services;
 using System.Threading.Tasks;
 using dotNETCoreWebAPI.Dtos.Character;
-
-
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace dotNETCoreWebAPI.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController: ControllerBase
@@ -24,7 +24,8 @@ namespace dotNETCoreWebAPI.Controllers
         [HttpGet("GetAll")]
         public async  Task<IActionResult> Get()
     {
-        return Ok( await _characterService.GetAllCharacters());
+        int userId = int.Parse(User.Claims.FirstOrDefault(clm => clm.Type == ClaimTypes.NameIdentifier).Value);
+        return Ok( await _characterService.GetAllCharacters(userId));
 
     }
 

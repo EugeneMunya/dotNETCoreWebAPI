@@ -1,19 +1,26 @@
+using System.Security.Claims;
+using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using dotNETCoreWebAPI.Models;
 using dotNETCoreWebAPI.Services;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 namespace dotNETCoreWebAPI.Data
 {
     public class AuthRepository : IAuthRepository
     {
 
         private readonly DataContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AuthRepository(DataContext context)
+        public AuthRepository(DataContext context, IConfiguration configuration)
         {
             _context=context;
+            _configuration= configuration;
         } 
 
         public void GeneratePasswordHash(string password, out byte[] passwordHash, out byte[] hashSalt)
@@ -21,7 +28,7 @@ namespace dotNETCoreWebAPI.Data
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
                 hashSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
 
         }
@@ -59,7 +66,7 @@ namespace dotNETCoreWebAPI.Data
             else
             {
                 response.Success= true;
-                response.Data= user.Id.ToString();
+                response.Data= CreateToken(user);
             }
 
             return response;
@@ -92,6 +99,26 @@ namespace dotNETCoreWebAPI.Data
                 return true;
             }
             return false;
+        }
+
+        private string CreateToken(User user)
+        {
+            List<Claim> claims = new List<Claim>{
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor{
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+            JwtSecurityTokenHandler securityHandler = new JwtSecurityTokenHandler();
+            SecurityToken token = securityHandler.CreateToken(tokenDescriptor);
+
+            return securityHandler.WriteToken(token);
         }
     }
 }

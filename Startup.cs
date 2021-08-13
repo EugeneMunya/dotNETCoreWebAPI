@@ -14,7 +14,9 @@ using dotNETCoreWebAPI.Services;
 using AutoMapper;
 using dotNETCoreWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 namespace dotNETCoreWebAPI
 {
     public class Startup
@@ -30,6 +32,17 @@ namespace dotNETCoreWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                  ValidateIssuerSigningKey = true,
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                  ValidateIssuer = false,
+                  ValidateAudience = false
+                };
+
+            });
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository,AuthRepository>();
@@ -47,7 +60,7 @@ namespace dotNETCoreWebAPI
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

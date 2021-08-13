@@ -38,10 +38,10 @@ namespace dotNETCoreWebAPI.Services
         return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
+        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters(int userId)
         {
             ServiceResponse<List<GetCharacterDto>> serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            List<Character> Dbcharacters = await _context.characters.ToListAsync();
+            List<Character> Dbcharacters = await _context.characters.Where(c=> c.User.Id==userId).ToListAsync();
             serviceResponse.Data=Dbcharacters.Select(c=>_mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
