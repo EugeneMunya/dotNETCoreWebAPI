@@ -1,6 +1,8 @@
 
 
 
+using System.Collections.Generic;
+
 namespace dotNETCoreWebAPI.Models
 {
 
@@ -17,6 +19,7 @@ namespace dotNETCoreWebAPI.Models
 
         public User User{get;set;}
         public Weapon weapon{get;set;}
+        public List<CharacterSkill> CharacterSkills { get; set; }
 
     }
 
