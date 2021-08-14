@@ -31,8 +31,8 @@ namespace dotNETCoreWebAPI.Services
                   response.Message = $"{attacker.Name} doesn't know that skill.";
                   return response;
                }
-               int damage = characterSkill.Skill.Damage + (new Random().Next(attacker.Intelligence));
-               damage -= new Random().Next(opponent.Defense);
+               int damage = characterSkill.Skill.Damage + (new Random().Next(attacker.Intelligency));
+               damage -= new Random().Next(opponent.Defence);
                if (damage > 0)
                     opponent.HitPoint -= (int)damage;
                 if (opponent.HitPoint <= 0)
@@ -44,6 +44,7 @@ namespace dotNETCoreWebAPI.Services
                 response.Success = false;
                 response.Message = ex.Message;
            }
+           return response;
         }
 
         public async Task<ServiceResponse<AttackResultDto>> WeaponAttack(WeaponAttackDto request)
