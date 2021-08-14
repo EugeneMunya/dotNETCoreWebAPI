@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace dotNETCoreWebAPI.Models
 {
     public class User
@@ -9,6 +11,9 @@ namespace dotNETCoreWebAPI.Models
         public byte[] PasswordHash{get;set;}
         public byte[] HasSalt{get;set;}
         public List<Character> Characters{get;set;}
+
+        [Required]
+        public string Role{get;set;}
 
     }
 }

@@ -27,10 +27,8 @@ namespace dotNETCoreWebAPI.Services
 
         private int GetUserId() => int.Parse(_httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-         private static List<Character> characters = new List<Character>() {
-            new Character(),
-            new Character{Name="Sam", Id=1}
-        };
+        private string GetUserRole() => _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddNewCharacter(AddCharacterDto newChar)
         {
             ServiceResponse<List<GetCharacterDto>> serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
@@ -45,7 +43,8 @@ namespace dotNETCoreWebAPI.Services
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
             ServiceResponse<List<GetCharacterDto>> serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            List<Character> Dbcharacters = await _context.characters.Where(c=> c.User.Id==GetUserId()).ToListAsync();
+            List<Character> Dbcharacters = GetUserRole().Equals("Admin") ? 
+             await _context.characters.ToListAsync() : await _context.characters.Where(c => c.User.Id == GetUserId()).ToListAsync();
             serviceResponse.Data=Dbcharacters.Select(c=>_mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
