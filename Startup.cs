@@ -53,6 +53,7 @@ namespace dotNETCoreWebAPI
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IWeaponService, WeaponService>();
             services.AddScoped<ICharacterSkillService, CharacterSkillService>();
+            services.AddScoped<IFightService,FightService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
